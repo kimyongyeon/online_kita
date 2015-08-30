@@ -1,0 +1,94 @@
+<project name="ceis" default="main" basedir=".">
+
+	<target name="init" >
+		<property environment="env"/>
+
+		<property name="sourceDir" value="src"/>
+		<property name="outputDir" value="classes"/>
+		<property name="jarDir" value="lib"/>
+		<property name="javadocsDir" value="../API"/>
+		<property name="Name" value="GITC v1.0.0"/>
+		<property name="pkgName" value="com" />
+		<property name="pkgName2" value="cel" />
+		<property name="pkgName3" value="filter" />
+	</target>
+
+	<target name="clean" depends="init">
+<!--
+		<delete dir="${outputDir}" />
+		<mkdir dir="${outputDir}" />
+-->
+	</target>
+	<target name="prepare" depends="init">
+	</target>
+	<target name="prepare1" depends="main">
+		<mkdir dir="${javadocsDir}" />
+	</target>
+
+	<target name="all" depends="clean">
+		<javac srcdir="${sourceDir}" destdir="${outputDir}" debug="true">
+			<classpath >
+				<pathelement path="${java.class.path}/"/>
+			</classpath>
+			</javac>
+	</target>
+
+
+<!-- ==================================================================== -->
+<!--                          Builds the full JavaDocs                    -->
+<!-- ==================================================================== -->
+<target name="javadoc" depends="prepare1"
+		description="Builds the API JavaDocs">
+
+	<!-- build the javadoc -->
+	<javadoc sourcepath="${sourceDir}"
+			destdir="${javadocsDir}"
+			doctitle="GITC21"
+			windowtitle="GITC21"
+		bottom="GITC21"
+			package="true"
+			author="true"
+			version="true"
+			noindex="true"
+		charset="UTF-8"
+			packagenames="com.*">
+	<classpath >
+		<pathelement path="${java.class.path}/"/>
+	</classpath>
+	</javadoc>
+</target>
+
+
+	<target name="main" depends="prepare">
+		<javac srcdir="${sourceDir}" destdir="${outputDir}" debug="true"  includeantruntime="false">
+						<patternset>
+							<include name="${pkgName}/**" />
+							<include name="${pkgName2}/**" />
+							<include name="${pkgName3}/**" />
+						</patternset>
+			<classpath >
+							<fileset dir="/data/T1/product/apache-tomcat-7.0.27/lib">
+								<include name="*.jar" />
+							</fileset>
+				<pathelement path="${java.class.path}/"/>
+			</classpath>
+						<classpath >
+							<fileset dir="/data/T1/product/WEBAPPS/VIETNAM/ROOT/WEB-INF/classes">
+								<include name="*.class" />
+							</fileset>
+							<pathelement path="${java.class.path}/"/>
+						</classpath>
+						<classpath >
+							<fileset dir="/data/T1/product/WEBAPPS/VIETNAM/ROOT/WEB-INF/lib">
+								<include name="*.jar" />
+							</fileset>
+							<pathelement path="${java.class.path}/"/>
+						</classpath>
+
+			</javac>
+	</target>
+
+	<target name="dist" depends="all" description="generate the distribution" >
+		<jar jarfile="${jarDir}/jemp.jar" basedir="${outputDir}"/>
+	</target>
+</project>

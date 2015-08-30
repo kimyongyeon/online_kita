@@ -1,0 +1,17 @@
+<Context path="" docBase="ROOT" reloadable="true" crossContext="true" privileged="true">
+	<ResourceLink name="GOBIZ" global="jdbc/GOBIZ"
+					type="javax.sql.DataSource" />
+
+<!--
+ <Resource name="mail/Session" auth="Container"
+           type="javax.mail.Session"/>
+ <ResourceParams name="mail/Session">
+          <parameter>
+          <name>mail.smtp.host</name>
+          <value>localhost</value>
+          </parameter>
+ </ResourceParams>
+-->
+
+</Context>
+
